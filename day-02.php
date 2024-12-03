@@ -27,38 +27,6 @@ function is_safe($report): bool
     return true;
 }
 
-function is_safe_with_tolerance($report): bool
-{
-    if (sizeof($report) < 2) {
-        return false;
-    }
-
-    $increasing = (int) ($report[0]) < (int) ($report[1]);
-    $ignored_one = false;
-
-    for ($i = 0; $i < sizeof($report) - 1; $i++) {
-        $a = (int) ($report[$i]);
-        $b = (int) ($report[$i + 1]);
-
-        $diff = abs($a - $b);
-        if ($diff <= 0 || $diff > 3) {
-            return false;
-        }
-        if ($ignored_one) {
-            if (($increasing && $a > $b) || (!$increasing && $a < $b)) {
-                return false;
-            }
-        } else {
-            if (($increasing && $a > $b) || (!$increasing && $a < $b)) {
-                $ignored_one = true;
-            }
-        }
-
-    }
-
-    return true;
-}
-
 function part_one($reports): int
 {
     $safe = 0;
